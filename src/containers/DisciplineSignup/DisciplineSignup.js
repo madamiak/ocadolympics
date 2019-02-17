@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 
 class DisciplineSignup extends Component {
 
@@ -6,6 +7,7 @@ class DisciplineSignup extends Component {
     super(props);
     const disciplines = props.disciplines || [];
     this.state = {
+      showConfirmation: false,
       submitted: false,
       disciplines: disciplines.map(it => ({
         id: it.id,
@@ -19,6 +21,10 @@ class DisciplineSignup extends Component {
     let disciplines = null;
     let signUpBtn = null;
     let message = <p className='success'>You have successfully signed up for selected disciplines</p>;
+    let dialog = null;
+    if(this.state.showConfirmation) {
+        dialog = <ConfirmationDialog acceptHandler={this.selectionAccept}/>;
+    }
     if(!this.state.submitted) {
       disciplines = this.state.disciplines.map(it => (
         <div key={it.id} className='discipline'>
@@ -35,6 +41,7 @@ class DisciplineSignup extends Component {
         {disciplines}
         {signUpBtn}
         {message}
+        {dialog}
       </div>
     );
   }
@@ -47,7 +54,14 @@ class DisciplineSignup extends Component {
   }
 
   selectionSubmit = () => {
-    this.setState({submitted: true});
+    this.setState({showConfirmation: true});
+  }
+
+  selectionAccept = () => {
+    this.setState({
+        showConfirmation: false,
+        submitted: true
+    });
   }
 }
 

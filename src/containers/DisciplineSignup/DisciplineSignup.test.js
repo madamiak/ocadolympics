@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DisciplineSignup from './DisciplineSignup';
+import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import { shallow, mount, render } from 'enzyme';
 
 describe('<DisciplineSignup/>', () => {
@@ -44,7 +45,7 @@ describe('<DisciplineSignup/>', () => {
         expect(dartsDiscipline.checked).toBeTruthy();
     });
 
-    it('signs up for selected disciplines', () => {
+    it('shows confirmation dialog when signing up for selected disciplines', () => {
         const disciplines = [
             {
                 id: 'foosball',
@@ -64,14 +65,46 @@ describe('<DisciplineSignup/>', () => {
             }
         ]
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
+        expect(wrapper.find(ConfirmationDialog).exists()).toBeFalsy();
 
         wrapper.find('input#darts').prop('onChange')({target: { id: 'darts', checked: true }})
         wrapper.find('input#tekken').prop('onChange')({target: { id: 'tekken', checked: true }})
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
-        const successMessage = wrapper.find('.success');
-        expect(successMessage.getElement()).toBeTruthy();
+        expect(wrapper.find(ConfirmationDialog).exists()).toBeTruthy();
+    });
+
+    it('shows confirmation message after signing up for selected disciplines', () => {
+        const disciplines = [
+            {
+                id: 'foosball',
+                name: 'Foosball'
+            },
+            {
+                id: 'darts',
+                name: 'Darts'
+            },
+            {
+                id: 'pull-ups',
+                name: 'Pull ups'
+            },
+            {
+                id: 'tekken',
+                name: 'Tekken'
+            }
+        ]
+        const wrapper = mount(<DisciplineSignup disciplines={disciplines}/>);
+
+        wrapper.find('input#darts').prop('onChange')({target: { id: 'darts', checked: true }})
+        wrapper.find('input#tekken').prop('onChange')({target: { id: 'tekken', checked: true }})
+        wrapper.find('button').prop('onClick')();
+        wrapper.update();
+
+        wrapper.find('button.accept').prop('onClick')();
+        wrapper.update();
+
+        expect(wrapper.find('.success').exists()).toBeTruthy();
     });
 
 });
