@@ -4,7 +4,25 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const disciplines = [
+    {
+        id: 'foosball',
+        name: 'Foosball'
+    },
+    {
+        id: 'darts',
+        name: 'Darts'
+    },
+    {
+        id: 'pull-ups',
+        name: 'Pull ups'
+    },
+    {
+        id: 'tekken',
+        name: 'Tekken'
+    }
+]
+ReactDOM.render(<App disciplines={disciplines}/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
