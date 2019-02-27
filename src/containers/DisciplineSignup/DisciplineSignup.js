@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 
-class DisciplineSignup extends Component {
+export class DisciplineSignup extends Component {
 
   constructor(props) {
     super(props);
@@ -10,10 +11,10 @@ class DisciplineSignup extends Component {
       showConfirmation: false,
       submitted: false,
       disciplines: disciplines.map(it => ({
-        id: it.id,
-        name: it.name,
-        checked: false
-      }))
+           id: it.id,
+           name: it.name,
+           checked: false
+        }))
     }
   }
 
@@ -35,7 +36,6 @@ class DisciplineSignup extends Component {
       signUpBtn = <button onClick={this.selectionSubmit}>Sign up</button>;
       message = null;
     }
-
     return (
       <div>
         {disciplines}
@@ -65,4 +65,10 @@ class DisciplineSignup extends Component {
   }
 }
 
-export default DisciplineSignup;
+const mapStateToProps = state => {
+    return {disciplines: state};
+};
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisciplineSignup);
