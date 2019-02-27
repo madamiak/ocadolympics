@@ -113,8 +113,8 @@
       "node"
     ],
     "watchPlugins": [
-      "/Users/mateusz.adamiak/workspace/ocadolympics/node_modules/jest-watch-typeahead/filename.js",
-      "/Users/mateusz.adamiak/workspace/ocadolympics/node_modules/jest-watch-typeahead/testname.js"
+      "<rootDir>/node_modules/jest-watch-typeahead/filename.js",
+      "<rootDir>/node_modules/jest-watch-typeahead/testname.js"
     ]
   },
   "babel": {

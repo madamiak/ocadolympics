@@ -12,14 +12,8 @@ describe('<DisciplineSignup/>', () => {
 
     it('displays disciplines', () => {
         const disciplines = [
-            {
-                id: 'foosball',
-                name: 'Foosball'
-            },
-            {
-                id: 'darts',
-                name: 'Darts'
-            }
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' }
         ]
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         const disciplineComponents = wrapper.find('div.discipline');
@@ -28,10 +22,7 @@ describe('<DisciplineSignup/>', () => {
 
     it('chooses correct discipline', () => {
         const disciplines = [
-            {
-                id: 'darts',
-                name: 'Darts'
-            }
+            { id: 'darts', name: 'Darts' }
         ]
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         const dartsComponent = wrapper.find('input#darts');
@@ -47,22 +38,10 @@ describe('<DisciplineSignup/>', () => {
 
     it('shows confirmation dialog when signing up for selected disciplines', () => {
         const disciplines = [
-            {
-                id: 'foosball',
-                name: 'Foosball'
-            },
-            {
-                id: 'darts',
-                name: 'Darts'
-            },
-            {
-                id: 'pull-ups',
-                name: 'Pull ups'
-            },
-            {
-                id: 'tekken',
-                name: 'Tekken'
-            }
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
         ]
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         expect(wrapper.find(ConfirmationDialog).exists()).toBeFalsy();
@@ -77,22 +56,10 @@ describe('<DisciplineSignup/>', () => {
 
     it('shows confirmation message after signing up for selected disciplines', () => {
         const disciplines = [
-            {
-                id: 'foosball',
-                name: 'Foosball'
-            },
-            {
-                id: 'darts',
-                name: 'Darts'
-            },
-            {
-                id: 'pull-ups',
-                name: 'Pull ups'
-            },
-            {
-                id: 'tekken',
-                name: 'Tekken'
-            }
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
         ]
         const wrapper = mount(<DisciplineSignup disciplines={disciplines}/>);
 
