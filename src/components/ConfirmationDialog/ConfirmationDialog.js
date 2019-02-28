@@ -1,6 +1,6 @@
 import React from 'react';
 
-const confirmationDialog = (props) => {
+const ConfirmationDialog = (props) => {
     return (
         <div className='dialog'>
             <button className='accept' onClick={props.acceptHandler}>Confirm</button>
@@ -8,4 +8,4 @@ const confirmationDialog = (props) => {
     );
 };
 
-export default confirmationDialog;
+export default ConfirmationDialog;

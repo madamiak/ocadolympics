@@ -58,10 +58,20 @@ export class DisciplineSignup extends Component {
     };
 
     selectionAccept = () => {
+        this.disciplinesSignUp();
         this.setState({
             showConfirmation: false,
             submitted: true
         });
+    };
+
+    disciplinesSignUp = () => {
+        if(this.props.disciplinesSignUpHandler) {
+            const selectedDisciplines = this.state.disciplines
+                .filter(it => it.checked)
+                .map(it => it.id);
+            this.props.disciplinesSignUpHandler(selectedDisciplines);
+        }
     }
 }
 

@@ -1,10 +1,11 @@
 import * as actions from './actions';
+import { SIGN_UP_FOR_DISCIPLINES } from './actions';
 
 describe('actions', () => {
     it('creates sign up for disciplines action', () => {
         const disciplines = ['darts', 'foosball'];
         const expectedAction = {
-            type: 'SIGN_UP_FOR_DISCIPLINES',
+            type: SIGN_UP_FOR_DISCIPLINES,
             payload: disciplines
         };
 

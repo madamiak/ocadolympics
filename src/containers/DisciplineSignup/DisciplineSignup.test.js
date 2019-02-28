@@ -2,8 +2,8 @@ import React from 'react';
 import { default as ConnectedDisciplineSignup, DisciplineSignup } from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import { mount, render, shallow } from 'enzyme';
-import { Provider } from "react-redux";
-import { mockStore } from "../../utils/test/testUtils";
+import { Provider } from 'react-redux';
+import { mockStore } from '../../utils/test/testUtils';
 
 describe('<DisciplineSignup/>', () => {
 
@@ -45,6 +45,28 @@ describe('<DisciplineSignup/>', () => {
         expect(wrapper.find(ConfirmationDialog).exists()).toBeTruthy();
     });
 
+    it('fires sign up for disciplines when signing up for selected disciplines', () => {
+        const disciplines = [
+            {id: 'foosball', name: 'Foosball'},
+            {id: 'darts', name: 'Darts'},
+            {id: 'pull-ups', name: 'Pull ups'},
+            {id: 'tekken', name: 'Tekken'}
+        ];
+        const func = jest.fn();
+        const wrapper = shallow(<DisciplineSignup disciplines={disciplines} disciplinesSignUpHandler={func}/>);
+
+        wrapper.find('input#darts').prop('onChange')({target: {id: 'darts', checked: true}});
+        wrapper.find('input#tekken').prop('onChange')({target: {id: 'tekken', checked: true}});
+        wrapper.find('button').prop('onClick')();
+        wrapper.update();
+
+        wrapper.find(ConfirmationDialog).dive().find('button.accept').prop('onClick')();
+        wrapper.update();
+
+        expect(func).toHaveBeenCalled();
+        expect(func.mock.calls[0][0]).toEqual(['darts', 'tekken']);
+    });
+
     it('shows confirmation message after signing up for selected disciplines', () => {
         const disciplines = [
             {id: 'foosball', name: 'Foosball'},
@@ -74,6 +96,25 @@ describe('<DisciplineSignup/>', () => {
                 {id: 'tekken', name: 'Tekken'}
             ];
 
+            const wrapper = mount(
+                <Provider store={mockStore({disciplines: disciplines})}>
+                    <ConnectedDisciplineSignup/>
+                </Provider>
+            );
+
+            const disciplineComponents = wrapper.find('div.discipline');
+            expect(disciplineComponents.length).toBe(disciplines.length);
+        });
+
+        it('signs up for selected disciplines', () => {
+            const disciplines = [
+                {id: 'foosball', name: 'Foosball'},
+                {id: 'darts', name: 'Darts'},
+                {id: 'pull-ups', name: 'Pull ups'},
+                {id: 'tekken', name: 'Tekken'}
+            ];
+
+            // TODO: mapDispatchToProps and change the store state
             const wrapper = mount(
                 <Provider store={mockStore({disciplines: disciplines})}>
                     <ConnectedDisciplineSignup/>
