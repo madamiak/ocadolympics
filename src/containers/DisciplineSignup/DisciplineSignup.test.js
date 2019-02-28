@@ -6,28 +6,44 @@ import { render, shallow } from 'enzyme';
 describe('<DisciplineSignup/>', () => {
 
     it('renders without crashing', () => {
-        render(<DisciplineSignup disciplines={[]}/>);
+        render(<DisciplineSignup disciplines={ [] }/>);
     });
 
     it('displays disciplines', () => {
         const disciplines = [
-            {id: 'foosball', name: 'Foosball'},
-            {id: 'darts', name: 'Darts'},
-            {id: 'pull-ups', name: 'Pull ups'},
-            {id: 'tekken', name: 'Tekken'}
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
         ];
 
-        const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
 
         const disciplineComponents = wrapper.find('div.discipline');
         expect(disciplineComponents.length).toBe(disciplines.length);
+    });
+
+    it('displays current sign ups', () => {
+        const disciplines = [
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
+        ];
+        const signUps = {
+            'user': ['darts', 'tekken']
+        };
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } signUps={ signUps }/>);
+
+        const signUpComponents = wrapper.find('div.signup');
+        expect(signUpComponents.length).toBe(signUps['user'].length);
     });
 
     it('chooses correct discipline', () => {
         const disciplines = [
             { id: 'darts', name: 'Darts' }
         ];
-        const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
         const dartsComponent = wrapper.find('input#darts');
         expect(dartsComponent.getElement()).toBeTruthy();
 
@@ -46,7 +62,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
         ];
-        const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
         expect(wrapper.find(ConfirmationDialog).exists()).toBeFalsy();
 
         wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
@@ -65,7 +81,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'tekken', name: 'Tekken' }
         ];
         const func = jest.fn();
-        const wrapper = shallow(<DisciplineSignup disciplines={disciplines} signUpForDisciplines={func}/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } signUpForDisciplines={ func }/>);
 
         wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
         wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
@@ -86,7 +102,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
         ];
-        const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
 
         wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
         wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });

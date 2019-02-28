@@ -25,6 +25,19 @@ export class DisciplineSignup extends Component {
         let signUpBtn = null;
         let message = <p className='success'>You have successfully signed up for selected disciplines</p>;
         let dialog = null;
+        let signUps = [];
+        Object.keys(this.props.signUps || {}).forEach(user => {
+            signUps.push(
+                <div key={user}>
+                    {user + '\'s sign ups:'}
+                    {this.props.signUps[user].map(it => (
+                        <div key={it} className='signup'>
+                            {this.state.disciplines.filter(d => d.id === it)[0].name}
+                        </div>
+                    ))}
+                </div>
+            )
+        });
         if (this.state.showConfirmation) {
             dialog = <ConfirmationDialog acceptHandler={this.selectionAccept}/>;
         }
@@ -44,6 +57,7 @@ export class DisciplineSignup extends Component {
                 {signUpBtn}
                 {message}
                 {dialog}
+                {signUps}
             </div>
         );
     }
@@ -78,7 +92,8 @@ export class DisciplineSignup extends Component {
 }
 
 const mapStateToProps = state => ({
-    disciplines: state.disciplines
+    disciplines: state.disciplines,
+    signUps: state.signUps
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
