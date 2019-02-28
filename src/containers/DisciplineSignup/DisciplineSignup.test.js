@@ -1,7 +1,7 @@
 import React from 'react';
-import { DisciplineSignup}  from './DisciplineSignup';
+import { DisciplineSignup } from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
-import { shallow, render } from 'enzyme';
+import { render, shallow } from 'enzyme';
 
 describe('<DisciplineSignup/>', () => {
 

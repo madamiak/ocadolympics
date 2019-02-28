@@ -3,9 +3,9 @@ import DisciplineSignup from './DisciplineSignup/DisciplineSignup';
 
 class App extends Component {
 
-  render() {
-    return <DisciplineSignup/>;
-  }
+    render() {
+        return <DisciplineSignup/>;
+    }
 
 }
 
