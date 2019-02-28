@@ -1,9 +1,7 @@
 import React from 'react';
-import { default as ConnectedDisciplineSignup, DisciplineSignup } from './DisciplineSignup';
+import { DisciplineSignup } from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
-import { mount, render, shallow } from 'enzyme';
-import { Provider } from 'react-redux';
-import { mockStore } from '../../utils/test/testUtils';
+import { render, shallow } from 'enzyme';
 
 describe('<DisciplineSignup/>', () => {
 
@@ -11,15 +9,29 @@ describe('<DisciplineSignup/>', () => {
         render(<DisciplineSignup disciplines={[]}/>);
     });
 
+    it('displays disciplines', () => {
+        const disciplines = [
+            {id: 'foosball', name: 'Foosball'},
+            {id: 'darts', name: 'Darts'},
+            {id: 'pull-ups', name: 'Pull ups'},
+            {id: 'tekken', name: 'Tekken'}
+        ];
+
+        const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
+
+        const disciplineComponents = wrapper.find('div.discipline');
+        expect(disciplineComponents.length).toBe(disciplines.length);
+    });
+
     it('chooses correct discipline', () => {
         const disciplines = [
-            {id: 'darts', name: 'Darts'}
+            { id: 'darts', name: 'Darts' }
         ];
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         const dartsComponent = wrapper.find('input#darts');
         expect(dartsComponent.getElement()).toBeTruthy();
 
-        dartsComponent.prop('onChange')({target: {id: 'darts', checked: true}});
+        dartsComponent.prop('onChange')({ target: { id: 'darts', checked: true } });
         wrapper.update();
 
         const disciplinesState = wrapper.state().disciplines;
@@ -29,16 +41,16 @@ describe('<DisciplineSignup/>', () => {
 
     it('shows confirmation dialog when signing up for selected disciplines', () => {
         const disciplines = [
-            {id: 'foosball', name: 'Foosball'},
-            {id: 'darts', name: 'Darts'},
-            {id: 'pull-ups', name: 'Pull ups'},
-            {id: 'tekken', name: 'Tekken'}
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
         ];
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         expect(wrapper.find(ConfirmationDialog).exists()).toBeFalsy();
 
-        wrapper.find('input#darts').prop('onChange')({target: {id: 'darts', checked: true}});
-        wrapper.find('input#tekken').prop('onChange')({target: {id: 'tekken', checked: true}});
+        wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
+        wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
@@ -47,16 +59,16 @@ describe('<DisciplineSignup/>', () => {
 
     it('fires sign up for disciplines when signing up for selected disciplines', () => {
         const disciplines = [
-            {id: 'foosball', name: 'Foosball'},
-            {id: 'darts', name: 'Darts'},
-            {id: 'pull-ups', name: 'Pull ups'},
-            {id: 'tekken', name: 'Tekken'}
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
         ];
         const func = jest.fn();
-        const wrapper = shallow(<DisciplineSignup disciplines={disciplines} disciplinesSignUpHandler={func}/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={disciplines} signUpForDisciplines={func}/>);
 
-        wrapper.find('input#darts').prop('onChange')({target: {id: 'darts', checked: true}});
-        wrapper.find('input#tekken').prop('onChange')({target: {id: 'tekken', checked: true}});
+        wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
+        wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
@@ -69,15 +81,15 @@ describe('<DisciplineSignup/>', () => {
 
     it('shows confirmation message after signing up for selected disciplines', () => {
         const disciplines = [
-            {id: 'foosball', name: 'Foosball'},
-            {id: 'darts', name: 'Darts'},
-            {id: 'pull-ups', name: 'Pull ups'},
-            {id: 'tekken', name: 'Tekken'}
+            { id: 'foosball', name: 'Foosball' },
+            { id: 'darts', name: 'Darts' },
+            { id: 'pull-ups', name: 'Pull ups' },
+            { id: 'tekken', name: 'Tekken' }
         ];
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
 
-        wrapper.find('input#darts').prop('onChange')({target: {id: 'darts', checked: true}});
-        wrapper.find('input#tekken').prop('onChange')({target: {id: 'tekken', checked: true}});
+        wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
+        wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
@@ -85,45 +97,6 @@ describe('<DisciplineSignup/>', () => {
         wrapper.update();
 
         expect(wrapper.find('.success').exists()).toBeTruthy();
-    });
-
-    describe('connect(<DisciplineSignup/>)', () => {
-        it('displays disciplines', () => {
-            const disciplines = [
-                {id: 'foosball', name: 'Foosball'},
-                {id: 'darts', name: 'Darts'},
-                {id: 'pull-ups', name: 'Pull ups'},
-                {id: 'tekken', name: 'Tekken'}
-            ];
-
-            const wrapper = mount(
-                <Provider store={mockStore({disciplines: disciplines})}>
-                    <ConnectedDisciplineSignup/>
-                </Provider>
-            );
-
-            const disciplineComponents = wrapper.find('div.discipline');
-            expect(disciplineComponents.length).toBe(disciplines.length);
-        });
-
-        it('signs up for selected disciplines', () => {
-            const disciplines = [
-                {id: 'foosball', name: 'Foosball'},
-                {id: 'darts', name: 'Darts'},
-                {id: 'pull-ups', name: 'Pull ups'},
-                {id: 'tekken', name: 'Tekken'}
-            ];
-
-            // TODO: mapDispatchToProps and change the store state
-            const wrapper = mount(
-                <Provider store={mockStore({disciplines: disciplines})}>
-                    <ConnectedDisciplineSignup/>
-                </Provider>
-            );
-
-            const disciplineComponents = wrapper.find('div.discipline');
-            expect(disciplineComponents.length).toBe(disciplines.length);
-        });
     });
 
 });

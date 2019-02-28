@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
+import { signUpForDisciplines } from '../../store/actions/actions';
+import { bindActionCreators } from 'redux';
 
 export class DisciplineSignup extends Component {
 
@@ -50,11 +52,11 @@ export class DisciplineSignup extends Component {
         const disciplines = this.state.disciplines.slice();
         const discipline = disciplines.filter(it => it.id === event.target.id)[0];
         discipline.checked = event.target.checked;
-        this.setState({disciplines: disciplines});
+        this.setState({ disciplines: disciplines });
     };
 
     selectionSubmit = () => {
-        this.setState({showConfirmation: true});
+        this.setState({ showConfirmation: true });
     };
 
     selectionAccept = () => {
@@ -66,11 +68,11 @@ export class DisciplineSignup extends Component {
     };
 
     disciplinesSignUp = () => {
-        if(this.props.disciplinesSignUpHandler) {
+        if (this.props.signUpForDisciplines) {
             const selectedDisciplines = this.state.disciplines
                 .filter(it => it.checked)
                 .map(it => it.id);
-            this.props.disciplinesSignUpHandler(selectedDisciplines);
+            this.props.signUpForDisciplines(selectedDisciplines);
         }
     }
 }
@@ -79,4 +81,8 @@ const mapStateToProps = state => ({
     disciplines: state.disciplines
 });
 
-export default connect(mapStateToProps, null)(DisciplineSignup);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    signUpForDisciplines
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisciplineSignup);
