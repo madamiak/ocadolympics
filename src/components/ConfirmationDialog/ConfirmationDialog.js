@@ -6,6 +6,6 @@ const confirmationDialog = (props) => {
             <button className='accept' onClick={props.acceptHandler}>Confirm</button>
         </div>
     );
-}
+};
 
 export default confirmationDialog;

@@ -51,11 +51,11 @@ export class DisciplineSignup extends Component {
     const discipline = disciplines.filter(it => it.id === event.target.id)[0];
     discipline.checked = event.target.checked;
     this.setState({disciplines: disciplines});
-  }
+  };
 
   selectionSubmit = () => {
     this.setState({showConfirmation: true});
-  }
+  };
 
   selectionAccept = () => {
     this.setState({
@@ -69,6 +69,4 @@ const mapStateToProps = state => {
     return {disciplines: state};
 };
 
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DisciplineSignup);
+export default connect(mapStateToProps, null)(DisciplineSignup);

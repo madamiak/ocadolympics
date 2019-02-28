@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { DisciplineSignup}  from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import { shallow, render } from 'enzyme';
@@ -24,12 +23,12 @@ describe('<DisciplineSignup/>', () => {
     it('chooses correct discipline', () => {
         const disciplines = [
             { id: 'darts', name: 'Darts' }
-        ]
+        ];
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         const dartsComponent = wrapper.find('input#darts');
         expect(dartsComponent.getElement()).toBeTruthy();
 
-        dartsComponent.prop('onChange')({target: { id: 'darts', checked: true }})
+        dartsComponent.prop('onChange')({target: { id: 'darts', checked: true }});
         wrapper.update();
 
         const disciplinesState = wrapper.state().disciplines;
@@ -43,12 +42,12 @@ describe('<DisciplineSignup/>', () => {
             { id: 'darts', name: 'Darts' },
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
-        ]
+        ];
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
         expect(wrapper.find(ConfirmationDialog).exists()).toBeFalsy();
 
-        wrapper.find('input#darts').prop('onChange')({target: { id: 'darts', checked: true }})
-        wrapper.find('input#tekken').prop('onChange')({target: { id: 'tekken', checked: true }})
+        wrapper.find('input#darts').prop('onChange')({target: { id: 'darts', checked: true }});
+        wrapper.find('input#tekken').prop('onChange')({target: { id: 'tekken', checked: true }});
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
@@ -61,11 +60,11 @@ describe('<DisciplineSignup/>', () => {
             { id: 'darts', name: 'Darts' },
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
-        ]
+        ];
         const wrapper = shallow(<DisciplineSignup disciplines={disciplines}/>);
 
-        wrapper.find('input#darts').prop('onChange')({target: { id: 'darts', checked: true }})
-        wrapper.find('input#tekken').prop('onChange')({target: { id: 'tekken', checked: true }})
+        wrapper.find('input#darts').prop('onChange')({target: { id: 'darts', checked: true }});
+        wrapper.find('input#tekken').prop('onChange')({target: { id: 'tekken', checked: true }});
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
