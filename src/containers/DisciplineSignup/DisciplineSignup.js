@@ -28,36 +28,36 @@ export class DisciplineSignup extends Component {
         let signUps = [];
         Object.keys(this.props.signUps || {}).forEach(user => {
             signUps.push(
-                <div key={user}>
-                    {user + '\'s sign ups:'}
-                    {this.props.signUps[user].map(it => (
-                        <div key={it} className='signup'>
-                            {this.state.disciplines.filter(d => d.id === it)[0].name}
+                <div key={ user }>
+                    { user + '\'s sign ups:' }
+                    { this.props.signUps[user].map(it => (
+                        <div key={ it } className='signup'>
+                            { this.state.disciplines.filter(d => d.id === it)[0].name }
                         </div>
-                    ))}
+                    )) }
                 </div>
             )
         });
         if (this.state.showConfirmation) {
-            dialog = <ConfirmationDialog acceptHandler={this.selectionAccept}/>;
+            dialog = <ConfirmationDialog acceptHandler={ this.selectionAccept }/>;
         }
         if (!this.state.submitted) {
             disciplines = this.state.disciplines.map(it => (
-                <div key={it.id} className='discipline'>
-                    <input type="checkbox" checked={it.checked} id={it.id} onChange={this.selectionChange}/>
-                    <label>{it.name}</label>
+                <div key={ it.id } className='discipline'>
+                    <input type="checkbox" checked={ it.checked } id={ it.id } onChange={ this.selectionChange }/>
+                    <label>{ it.name }</label>
                 </div>
             ));
-            signUpBtn = <button onClick={this.selectionSubmit}>Sign up</button>;
+            signUpBtn = <button onClick={ this.selectionSubmit }>Sign up</button>;
             message = null;
         }
         return (
             <div>
-                {disciplines}
-                {signUpBtn}
-                {message}
-                {dialog}
-                {signUps}
+                { disciplines }
+                { signUpBtn }
+                { message }
+                { dialog }
+                { signUps }
             </div>
         );
     }
