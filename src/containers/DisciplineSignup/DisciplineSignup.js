@@ -65,8 +65,8 @@ export class DisciplineSignup extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {disciplines: state};
-};
+const mapStateToProps = state => ({
+    disciplines: state.disciplines
+});
 
 export default connect(mapStateToProps, null)(DisciplineSignup);
