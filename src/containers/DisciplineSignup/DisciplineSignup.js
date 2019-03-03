@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import { signUpForDisciplines } from '../../store/actions/actions';
 import { bindActionCreators } from 'redux';
+import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 
 export class DisciplineSignup extends Component {
 
@@ -21,7 +22,7 @@ export class DisciplineSignup extends Component {
     }
 
     render() {
-        let disciplines = null;
+        let disciplineTiles = null;
         let signUpBtn = null;
         let message = <p className='success'>You have successfully signed up for selected disciplines</p>;
         let dialog = null;
@@ -42,18 +43,21 @@ export class DisciplineSignup extends Component {
             dialog = <ConfirmationDialog acceptHandler={ this.selectionAccept }/>;
         }
         if (!this.state.submitted) {
-            disciplines = this.state.disciplines.map(it => (
-                <div key={ it.id } className='discipline'>
-                    <input type="checkbox" checked={ it.checked } id={ it.id } onChange={ this.selectionChange }/>
-                    <label>{ it.name }</label>
-                </div>
+            disciplineTiles = this.state.disciplines.map(it => (
+                <DisciplineTile
+                    key={ it.id }
+                    id={ it.id }
+                    checked={ it.checked }
+                    name={ it.name }
+                    selectionChange={ this.selectionChange }
+                />
             ));
             signUpBtn = <button onClick={ this.selectionSubmit }>Sign up</button>;
             message = null;
         }
         return (
             <div>
-                { disciplines }
+                { disciplineTiles }
                 { signUpBtn }
                 { message }
                 { dialog }

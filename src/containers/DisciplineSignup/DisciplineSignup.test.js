@@ -2,6 +2,7 @@ import React from 'react';
 import { DisciplineSignup } from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import { render, shallow } from 'enzyme';
+import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 
 describe('<DisciplineSignup/>', () => {
 
@@ -19,7 +20,7 @@ describe('<DisciplineSignup/>', () => {
 
         const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
 
-        const disciplineComponents = wrapper.find('div.discipline');
+        const disciplineComponents = wrapper.find(DisciplineTile);
         expect(disciplineComponents.length).toBe(disciplines.length);
     });
 
@@ -44,7 +45,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'darts', name: 'Darts' }
         ];
         const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
-        const dartsComponent = wrapper.find('input#darts');
+        const dartsComponent = wrapper.find(DisciplineTile).dive().find('input#darts');
         expect(dartsComponent.getElement()).toBeTruthy();
 
         dartsComponent.prop('onChange')({ target: { id: 'darts', checked: true } });
@@ -65,8 +66,8 @@ describe('<DisciplineSignup/>', () => {
         const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
         expect(wrapper.find(ConfirmationDialog).exists()).toBeFalsy();
 
-        wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
-        wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
+        wrapper.find({id: 'darts'}).prop('selectionChange')({ target: { id: 'darts', checked: true } });
+        wrapper.find({id: 'tekken'}).prop('selectionChange')({ target: { id: 'tekken', checked: true } });
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
@@ -83,8 +84,8 @@ describe('<DisciplineSignup/>', () => {
         const func = jest.fn();
         const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } signUpForDisciplines={ func }/>);
 
-        wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
-        wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
+        wrapper.find({id: 'darts'}).prop('selectionChange')({ target: { id: 'darts', checked: true } });
+        wrapper.find({id: 'tekken'}).prop('selectionChange')({ target: { id: 'tekken', checked: true } });
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
@@ -104,8 +105,8 @@ describe('<DisciplineSignup/>', () => {
         ];
         const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
 
-        wrapper.find('input#darts').prop('onChange')({ target: { id: 'darts', checked: true } });
-        wrapper.find('input#tekken').prop('onChange')({ target: { id: 'tekken', checked: true } });
+        wrapper.find({id: 'darts'}).prop('selectionChange')({ target: { id: 'darts', checked: true } });
+        wrapper.find({id: 'tekken'}).prop('selectionChange')({ target: { id: 'tekken', checked: true } });
         wrapper.find('button').prop('onClick')();
         wrapper.update();
 
