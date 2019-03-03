@@ -1,8 +1,7 @@
-export const SIGN_UP_FOR_DISCIPLINES = 'SIGN_UP_FOR_DISCIPLINES';
+import { addSignUp } from '../../containers/signUpsRepository';
 
-export const signUpForDisciplines = disciplines => {
-    return {
-        type: SIGN_UP_FOR_DISCIPLINES,
-        payload: disciplines
-    };
+export const signUpForDisciplines = disciplines => dispatch => {
+    addSignUp('user', disciplines).then(
+        dispatch({type: 'TBD'})
+    );
 };

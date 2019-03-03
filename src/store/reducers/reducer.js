@@ -1,5 +1,3 @@
-import { SIGN_UP_FOR_DISCIPLINES } from '../actions/actions';
-
 const initialState = {
     disciplines: [
         { id: 'foosball', name: 'Foosball' },
@@ -12,10 +10,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case SIGN_UP_FOR_DISCIPLINES:
-            const newSignUps = { ...state.signUps };
-            newSignUps['user'] = action.payload;
-            return { ...state, signUps: newSignUps };
         default:
             return state
     }

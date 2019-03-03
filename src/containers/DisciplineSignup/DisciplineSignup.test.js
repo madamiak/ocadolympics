@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, shallow } from 'enzyme';
 import { DisciplineSignup } from './DisciplineSignup';
+import { addSignUp, getSignUps } from '../signUpsRepository';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
@@ -34,13 +35,11 @@ describe('<DisciplineSignup/>', () => {
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
         ];
-        const signUps = {
-            'user': ['darts', 'tekken']
-        };
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } signUps={ signUps }/>);
+        addSignUp('user', ['darts', 'tekken']);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
 
         const signUpComponents = wrapper.find(SignUps).dive().find(SignUp);
-        expect(signUpComponents.length).toBe(signUps['user'].length);
+        expect(signUpComponents.length).toBe(getSignUps()['user'].length);
     });
 
     it('chooses correct discipline', () => {

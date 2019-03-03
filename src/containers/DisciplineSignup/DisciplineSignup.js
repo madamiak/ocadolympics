@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { signUpForDisciplines } from '../../store/actions/actions';
+import { getSignUps } from '../signUpsRepository';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
 import SignUps from '../../components/SignUps/SignUps';
@@ -24,6 +25,7 @@ export class DisciplineSignup extends Component {
     }
 
     render() {
+        const signUps = getSignUps();
         return (
             <div>
                 <DisciplineTiles
@@ -34,7 +36,7 @@ export class DisciplineSignup extends Component {
                 <button hidden={ this.state.submitted } onClick={ this.selectionSubmit }>Sign up</button>
                 <SuccessDialog show={ this.state.submitted }/>
                 <ConfirmationDialog show={ this.state.showConfirmation } acceptHandler={ this.selectionAccept }/>
-                <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
+                <SignUps signUps={ signUps } disciplines={ this.props.disciplines }/>
             </div>
         );
     }
@@ -69,8 +71,7 @@ export class DisciplineSignup extends Component {
 }
 
 const mapStateToProps = state => ({
-    disciplines: state.disciplines,
-    signUps: state.signUps
+    disciplines: state.disciplines
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
