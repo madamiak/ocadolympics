@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
-import { signUpForDisciplines } from '../../store/actions/actions';
 import { bindActionCreators } from 'redux';
-import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
+import { signUpForDisciplines } from '../../store/actions/actions';
+import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
 import SignUps from '../../components/SignUps/SignUps';
+import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
 
 export class DisciplineSignup extends Component {
 
@@ -24,35 +24,17 @@ export class DisciplineSignup extends Component {
     }
 
     render() {
-        let disciplineTiles = null;
-        let signUpBtn = null;
-        let message = null;
-        let dialog = null;
-        const signUps = <SignUps signUps={this.props.signUps} disciplines={this.props.disciplines}/>;
-        if (this.state.showConfirmation) {
-            dialog = <ConfirmationDialog acceptHandler={ this.selectionAccept }/>;
-        }
-        if (!this.state.submitted) {
-            disciplineTiles = this.state.disciplines.map(it => (
-                <DisciplineTile
-                    key={ it.id }
-                    id={ it.id }
-                    checked={ it.checked }
-                    name={ it.name }
-                    selectionChange={ this.selectionChange }
-                />
-            ));
-            signUpBtn = <button onClick={ this.selectionSubmit }>Sign up</button>;
-        } else {
-            message = <SuccessDialog/>;
-        }
         return (
             <div>
-                { disciplineTiles }
-                { signUpBtn }
-                { message }
-                { dialog }
-                { signUps }
+                <DisciplineTiles
+                    show={ !this.state.submitted }
+                    disciplines={ this.state.disciplines }
+                    selectionChange={ this.selectionChange }
+                />
+                <button hidden={ this.state.submitted } onClick={ this.selectionSubmit }>Sign up</button>
+                <SuccessDialog show={ this.state.submitted }/>
+                <ConfirmationDialog show={ this.state.showConfirmation } acceptHandler={ this.selectionAccept }/>
+                <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
             </div>
         );
     }
