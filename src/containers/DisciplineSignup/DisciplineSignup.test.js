@@ -4,6 +4,8 @@ import ConfirmationDialog from '../../components/ConfirmationDialog/Confirmation
 import { render, shallow } from 'enzyme';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
+import SignUps from '../../components/SignUps/SignUps';
+import SignUp from '../../components/SignUp/SignUp';
 
 describe('<DisciplineSignup/>', () => {
 
@@ -37,7 +39,7 @@ describe('<DisciplineSignup/>', () => {
         };
         const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } signUps={ signUps }/>);
 
-        const signUpComponents = wrapper.find('div.signup');
+        const signUpComponents = wrapper.find(SignUps).dive().find(SignUp);
         expect(signUpComponents.length).toBe(signUps['user'].length);
     });
 

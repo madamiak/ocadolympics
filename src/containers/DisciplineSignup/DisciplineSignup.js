@@ -5,6 +5,7 @@ import { signUpForDisciplines } from '../../store/actions/actions';
 import { bindActionCreators } from 'redux';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
+import SignUps from '../../components/SignUps/SignUps';
 
 export class DisciplineSignup extends Component {
 
@@ -27,19 +28,7 @@ export class DisciplineSignup extends Component {
         let signUpBtn = null;
         let message = null;
         let dialog = null;
-        let signUps = [];
-        Object.keys(this.props.signUps || {}).forEach(user => {
-            signUps.push(
-                <div key={ user }>
-                    { user + '\'s sign ups:' }
-                    { this.props.signUps[user].map(it => (
-                        <div key={ it } className='signup'>
-                            { this.state.disciplines.filter(d => d.id === it)[0].name }
-                        </div>
-                    )) }
-                </div>
-            )
-        });
+        const signUps = <SignUps signUps={this.props.signUps} disciplines={this.props.disciplines}/>;
         if (this.state.showConfirmation) {
             dialog = <ConfirmationDialog acceptHandler={ this.selectionAccept }/>;
         }
