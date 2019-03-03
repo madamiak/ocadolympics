@@ -3,6 +3,7 @@ import { DisciplineSignup } from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import { render, shallow } from 'enzyme';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
+import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
 
 describe('<DisciplineSignup/>', () => {
 
@@ -113,7 +114,7 @@ describe('<DisciplineSignup/>', () => {
         wrapper.find(ConfirmationDialog).dive().find('button.accept').prop('onClick')();
         wrapper.update();
 
-        expect(wrapper.find('.success').exists()).toBeTruthy();
+        expect(wrapper.find(SuccessDialog).exists()).toBeTruthy();
     });
 
 });

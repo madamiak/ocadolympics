@@ -4,6 +4,7 @@ import ConfirmationDialog from '../../components/ConfirmationDialog/Confirmation
 import { signUpForDisciplines } from '../../store/actions/actions';
 import { bindActionCreators } from 'redux';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
+import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
 
 export class DisciplineSignup extends Component {
 
@@ -24,7 +25,7 @@ export class DisciplineSignup extends Component {
     render() {
         let disciplineTiles = null;
         let signUpBtn = null;
-        let message = <p className='success'>You have successfully signed up for selected disciplines</p>;
+        let message = null;
         let dialog = null;
         let signUps = [];
         Object.keys(this.props.signUps || {}).forEach(user => {
@@ -53,7 +54,8 @@ export class DisciplineSignup extends Component {
                 />
             ));
             signUpBtn = <button onClick={ this.selectionSubmit }>Sign up</button>;
-            message = null;
+        } else {
+            message = <SuccessDialog/>;
         }
         return (
             <div>
