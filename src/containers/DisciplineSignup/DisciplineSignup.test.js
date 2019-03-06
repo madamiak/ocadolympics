@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, shallow } from 'enzyme';
 import { DisciplineSignup } from './DisciplineSignup';
-import { addSignUp, getSignUps } from '../signUpsRepository';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
@@ -23,7 +22,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'tekken', name: 'Tekken' }
         ];
 
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
         const disciplineComponents = wrapper.find(DisciplineTiles).dive().find(DisciplineTile);
         expect(disciplineComponents.length).toBe(disciplines.length);
     });
@@ -35,18 +34,20 @@ describe('<DisciplineSignup/>', () => {
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
         ];
-        addSignUp('user', ['darts', 'tekken']);
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
+        const signUps = { user: ['darts', 'tekken'] };
+        const wrapper = shallow(
+            <DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() } signUps={ signUps }/>
+        );
 
         const signUpComponents = wrapper.find(SignUps).dive().find(SignUp);
-        expect(signUpComponents.length).toBe(getSignUps()['user'].length);
+        expect(signUpComponents.length).toBe(signUps.user.length);
     });
 
     it('chooses correct discipline', () => {
         const disciplines = [
             { id: 'darts', name: 'Darts' }
         ];
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
         const dartsComponent = wrapper.find(DisciplineTiles).dive().find(DisciplineTile).dive()
             .find('input#darts');
         expect(dartsComponent.getElement()).toBeTruthy();
@@ -66,7 +67,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
         ];
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
         expect(wrapper.find(ConfirmationDialog).prop('show')).toBeFalsy();
 
         wrapper.find(DisciplineTiles).dive().find({ id: 'darts' })
@@ -87,7 +88,9 @@ describe('<DisciplineSignup/>', () => {
             { id: 'tekken', name: 'Tekken' }
         ];
         const func = jest.fn();
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } signUpForDisciplines={ func }/>);
+        const wrapper = shallow(
+            <DisciplineSignup disciplines={ disciplines } signUpForDisciplines={ func } fetchSignUps={ jest.fn() }/>
+        );
 
         wrapper.find(DisciplineTiles).dive().find({ id: 'darts' })
             .prop('selectionChange')({ target: { id: 'darts', checked: true } });
@@ -110,7 +113,7 @@ describe('<DisciplineSignup/>', () => {
             { id: 'pull-ups', name: 'Pull ups' },
             { id: 'tekken', name: 'Tekken' }
         ];
-        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines }/>);
+        const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
 
         wrapper.find(DisciplineTiles).dive().find({ id: 'darts' })
             .prop('selectionChange')({ target: { id: 'darts', checked: true } });

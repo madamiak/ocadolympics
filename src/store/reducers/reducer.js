@@ -10,6 +10,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case 'SIGN_UPS_FETCHED':
+            return {
+                ...state,
+                signUps: action.payload
+            };
+        case 'USER_SIGNED_UP':
+            const newSignUps = { ...state.signUps };
+            newSignUps.user = action.payload;
+            return {
+                ...state,
+                signUps: newSignUps
+            };
         default:
             return state
     }
