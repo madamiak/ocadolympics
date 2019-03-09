@@ -16,8 +16,7 @@ export default (state = initialState, action) => {
                 signUps: action.payload
             };
         case 'USER_SIGNED_UP':
-            const newSignUps = { ...state.signUps };
-            newSignUps.user = action.payload;
+            const newSignUps = { ...state.signUps, ...action.payload };
             return {
                 ...state,
                 signUps: newSignUps
