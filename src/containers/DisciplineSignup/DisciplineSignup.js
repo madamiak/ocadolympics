@@ -31,14 +31,14 @@ export class DisciplineSignup extends Component {
     return (
       <div>
         <DisciplineTiles
-          show={!this.state.submitted}
-          disciplines={this.state.disciplines}
-          selectionChange={this.selectionChange}
+          show={ !this.state.submitted }
+          disciplines={ this.state.disciplines }
+          selectionChange={ this.selectionChange }
         />
-        <button hidden={this.state.submitted} onClick={this.selectionSubmit}>Sign up</button>
-        <SuccessDialog show={this.state.submitted}/>
-        <ConfirmationDialog show={this.state.showConfirmation} acceptHandler={this.selectionAccept}/>
-        <SignUps signUps={this.props.signUps} disciplines={this.props.disciplines}/>
+        <button hidden={ this.state.submitted } onClick={ this.selectionSubmit }>Sign up</button>
+        <SuccessDialog show={ this.state.submitted }/>
+        <ConfirmationDialog show={ this.state.showConfirmation } acceptHandler={ this.selectionAccept }/>
+        <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
       </div>
     );
   }
@@ -46,7 +46,7 @@ export class DisciplineSignup extends Component {
   selectionChange = (event) => {
     const disciplines = this.state.disciplines.slice();
     const discipline = disciplines.filter(it => it.id === event.target.id)[0];
-    discipline.checked = event.target.checked;
+    discipline.checked = !discipline.checked;
     this.setState({ disciplines: disciplines });
   };
 

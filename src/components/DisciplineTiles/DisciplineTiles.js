@@ -1,19 +1,29 @@
 import React from 'react';
+import styled from 'styled-components';
 import DisciplineTile from '../DisciplineTile/DisciplineTile';
 
+const StyledDiscliplineTiles = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
 const DisciplineTiles = (props) => {
-    if (!props.show) {
-        return null;
-    }
-    return props.disciplines.map(it => (
+  if (!props.show) {
+    return null;
+  }
+  return (
+    <StyledDiscliplineTiles>
+      { props.disciplines.map(it => (
         <DisciplineTile
-            key={ it.id }
-            id={ it.id }
-            checked={ it.checked }
-            name={ it.name }
-            selectionChange={ props.selectionChange }
-        />
-    ));
+          key={ it.id }
+          id={ it.id }
+          checked={ it.checked }
+          name={ it.name }
+          selectionChange={ props.selectionChange }
+        />))
+      }
+    </StyledDiscliplineTiles>
+  );
 };
 
 export default DisciplineTiles;
