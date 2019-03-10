@@ -11,15 +11,10 @@ export class DisciplineSignup extends Component {
 
   constructor(props) {
     super(props);
-    const disciplines = props.disciplines || [];
     this.state = {
       showConfirmation: false,
       submitted: false,
-      disciplines: disciplines.map(it => ({
-        id: it.id,
-        name: it.name,
-        checked: false
-      }))
+      disciplines: props.disciplines
     }
   }
 
@@ -69,11 +64,15 @@ export class DisciplineSignup extends Component {
         .map(it => it.id);
       this.props.signUpForDisciplines(selectedDisciplines);
     }
-  }
+  };
 }
 
 const mapStateToProps = state => ({
-  disciplines: state.disciplines,
+  disciplines: state.disciplines.map(it => ({
+    id: it.id,
+    name: it.name,
+    checked: false
+  })),
   signUps: state.signUps
 });
 

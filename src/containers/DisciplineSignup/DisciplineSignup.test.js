@@ -1,99 +1,84 @@
 import React from 'react';
-import { render, shallow } from 'enzyme';
-import { DisciplineSignup } from './DisciplineSignup';
-import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
-import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
-import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
-import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
+import { mount, render, shallow } from 'enzyme';
+import { default as ConnectedDisciplineSignup, DisciplineSignup } from './DisciplineSignup';
+import { mockStore } from '../../utils/test/testUtils';
+import { Provider } from 'react-redux';
 
 describe('<DisciplineSignup/>', () => {
+  const getDisciplines = () => [
+    { id: 'foosball', name: 'Foosball', checked: false },
+    { id: 'darts', name: 'Darts', checked: false },
+    { id: 'pull-ups', name: 'Pull ups', checked: false },
+    { id: 'tekken', name: 'Tekken', checked: false }
+  ];
 
   it('renders without crashing', () => {
-    render(<DisciplineSignup disciplines={ [] }/>);
+    render(<DisciplineSignup disciplines={ getDisciplines() }/>);
+  });
+
+  it('connects to redux', () => {
+    const disciplines = getDisciplines();
+    const signUps = ['darts', 'tekken'];
+    const store = mockStore({
+      disciplines: disciplines,
+      signUps: {
+        user: signUps
+      }
+    });
+
+    const wrapper = mount(
+      <Provider store={ store }>
+        <ConnectedDisciplineSignup/>
+      </Provider>
+    );
+
+    const props = wrapper.find(DisciplineSignup).props();
+    expect(props.disciplines.length).toEqual(disciplines.length);
+    expect(props.signUps).toBeTruthy();
+    expect(props.signUps.user.length).toEqual(signUps.length);
+    expect(props.signUpForDisciplines).toBeTruthy();
+    expect(props.fetchSignUps).toBeTruthy();
   });
 
   it('chooses correct discipline', () => {
-    const disciplines = [
-      { id: 'darts', name: 'Darts' }
-    ];
-    const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
-    const dartsComponent = wrapper.find(DisciplineTiles).dive().find(DisciplineTile).dive().find('#darts');
-    expect(dartsComponent.getElement()).toBeTruthy();
+    const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
 
-    dartsComponent.prop('onClick')({ target: { id: 'darts' } });
-    wrapper.update();
+    wrapper.instance().selectionChange({ target: { id: 'darts' } });
 
-    const disciplinesState = wrapper.state().disciplines;
-    const dartsDiscipline = disciplinesState.filter(it => it.id === 'darts')[0];
-    expect(dartsDiscipline.checked).toBeTruthy();
+    expect(wrapper.state().disciplines[1].checked).toBeTruthy();
   });
 
-  it('shows confirmation dialog when signing up for selected disciplines', () => {
-    const disciplines = [
-      { id: 'foosball', name: 'Foosball' },
-      { id: 'darts', name: 'Darts' },
-      { id: 'pull-ups', name: 'Pull ups' },
-      { id: 'tekken', name: 'Tekken' }
-    ];
-    const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
-    expect(wrapper.find(ConfirmationDialog).prop('show')).toBeFalsy();
+  it('shows confirmation dialog when signing up for selected getDisciplines', () => {
+    const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
+    expect(wrapper.state().showConfirmation).toBeFalsy();
 
-    wrapper.find(DisciplineTiles).dive().find({ id: 'darts' })
-      .prop('selectionChange')({ target: { id: 'darts', checked: true } });
-    wrapper.find(DisciplineTiles).dive().find({ id: 'tekken' })
-      .prop('selectionChange')({ target: { id: 'tekken', checked: true } });
-    wrapper.find('button').prop('onClick')();
-    wrapper.update();
+    wrapper.instance().selectionSubmit();
 
-    expect(wrapper.find(ConfirmationDialog).exists()).toBeTruthy();
+    expect(wrapper.state().showConfirmation).toBeTruthy();
   });
 
-  it('fires sign up for disciplines when signing up for selected disciplines', () => {
-    const disciplines = [
-      { id: 'foosball', name: 'Foosball' },
-      { id: 'darts', name: 'Darts' },
-      { id: 'pull-ups', name: 'Pull ups' },
-      { id: 'tekken', name: 'Tekken' }
-    ];
+  it('fires sign up for getDisciplines when signing up for selected getDisciplines', () => {
     const func = jest.fn();
     const wrapper = shallow(
-      <DisciplineSignup disciplines={ disciplines } signUpForDisciplines={ func } fetchSignUps={ jest.fn() }/>
+      <DisciplineSignup disciplines={ getDisciplines() } signUpForDisciplines={ func } fetchSignUps={ jest.fn() }/>
     );
 
-    wrapper.find(DisciplineTiles).dive().find({ id: 'darts' })
-      .prop('selectionChange')({ target: { id: 'darts', checked: true } });
-    wrapper.find(DisciplineTiles).dive().find({ id: 'tekken' })
-      .prop('selectionChange')({ target: { id: 'tekken', checked: true } });
-    wrapper.find('button').prop('onClick')();
-    wrapper.update();
-
-    wrapper.find(ConfirmationDialog).dive().find('button.accept').prop('onClick')();
-    wrapper.update();
+    wrapper.instance().selectionChange({ target: { id: 'darts' } });
+    wrapper.instance().selectionChange({ target: { id: 'tekken' } });
+    wrapper.instance().selectionAccept();
 
     expect(func).toHaveBeenCalled();
     expect(func.mock.calls[0][0]).toEqual(['darts', 'tekken']);
   });
 
-  it('shows confirmation message after signing up for selected disciplines', () => {
-    const disciplines = [
-      { id: 'foosball', name: 'Foosball' },
-      { id: 'darts', name: 'Darts' },
-      { id: 'pull-ups', name: 'Pull ups' },
-      { id: 'tekken', name: 'Tekken' }
-    ];
-    const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
+  it('sets sign ups submitted', () => {
+    const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
+    expect(wrapper.state().submitted).toBeFalsy();
 
-    wrapper.find(DisciplineTiles).dive().find({ id: 'darts' })
-      .prop('selectionChange')({ target: { id: 'darts', checked: true } });
-    wrapper.find(DisciplineTiles).dive().find({ id: 'tekken' })
-      .prop('selectionChange')({ target: { id: 'tekken', checked: true } });
-    wrapper.find('button').prop('onClick')();
-    wrapper.update();
+    wrapper.instance().selectionAccept();
 
-    wrapper.find(ConfirmationDialog).dive().find('button.accept').prop('onClick')();
-    wrapper.update();
-
-    expect(wrapper.find(SuccessDialog).exists()).toBeTruthy();
+    expect(wrapper.state().showConfirmation).toBeFalsy();
+    expect(wrapper.state().submitted).toBeTruthy();
   });
 
 });
