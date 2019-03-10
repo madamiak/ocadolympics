@@ -14,19 +14,6 @@ describe('<DisciplineSignup/>', () => {
     render(<DisciplineSignup disciplines={ [] }/>);
   });
 
-  it('displays disciplines', () => {
-    const disciplines = [
-      { id: 'foosball', name: 'Foosball' },
-      { id: 'darts', name: 'Darts' },
-      { id: 'pull-ups', name: 'Pull ups' },
-      { id: 'tekken', name: 'Tekken' }
-    ];
-
-    const wrapper = shallow(<DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() }/>);
-    const disciplineComponents = wrapper.find(DisciplineTiles).dive().find(DisciplineTile);
-    expect(disciplineComponents.length).toBe(disciplines.length);
-  });
-
   it('displays current sign ups', () => {
     const disciplines = [
       { id: 'foosball', name: 'Foosball' },
