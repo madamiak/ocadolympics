@@ -6,6 +6,7 @@ import ConfirmationDialog from '../../components/ConfirmationDialog/Confirmation
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
 import SignUps from '../../components/SignUps/SignUps';
 import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
+import Button from '../../components/Button/Button';
 
 export class DisciplineSignup extends Component {
 
@@ -24,17 +25,17 @@ export class DisciplineSignup extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <DisciplineTiles
           show={ !this.state.submitted }
           disciplines={ this.state.disciplines }
           selectionChange={ this.selectionChange }
         />
-        <button hidden={ this.state.submitted } onClick={ this.selectionSubmit }>Sign up</button>
+        <Button hidden={ this.state.submitted } onClick={ this.selectionSubmit }>Sign up</Button>
         <SuccessDialog show={ this.state.submitted }/>
         <ConfirmationDialog show={ this.state.showConfirmation } acceptHandler={ this.selectionAccept }/>
         <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
-      </div>
+      </>
     );
   }
 

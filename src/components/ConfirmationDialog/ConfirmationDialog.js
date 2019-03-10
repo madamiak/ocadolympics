@@ -1,13 +1,14 @@
 import React from 'react';
+import Button from '../Button/Button';
 
 const ConfirmationDialog = (props) => {
     if(!props.show) {
         return null;
     }
     return (
-        <div className='dialog'>
-            <button className='accept' onClick={ props.acceptHandler }>Confirm</button>
-        </div>
+        <>
+            <Button className='accept' onClick={ props.acceptHandler }>Confirm</Button>
+        </>
     );
 };
 

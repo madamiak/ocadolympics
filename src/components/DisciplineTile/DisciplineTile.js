@@ -5,11 +5,12 @@ const StyledDiscipline = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 10rem;
     
     ${ props => props.checked && css`
-        background: red;
+        background: #777;
+        color: white;
     ` }
 `;
 

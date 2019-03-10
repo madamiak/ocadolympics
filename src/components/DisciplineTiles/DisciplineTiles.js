@@ -2,9 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import DisciplineTile from '../DisciplineTile/DisciplineTile';
 
-const StyledDiscliplineTiles = styled.div`
+const StyledDiscliplineTiles = styled.section`
     display: flex;
     flex-direction: row;
+    flex-flow: wrap;
 `;
 
 const DisciplineTiles = (props) => {
