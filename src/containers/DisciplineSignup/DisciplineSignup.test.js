@@ -4,30 +4,12 @@ import { DisciplineSignup } from './DisciplineSignup';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import DisciplineTile from '../../components/DisciplineTile/DisciplineTile';
 import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
-import SignUps from '../../components/SignUps/SignUps';
-import SignUp from '../../components/SignUp/SignUp';
 import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
 
 describe('<DisciplineSignup/>', () => {
 
   it('renders without crashing', () => {
     render(<DisciplineSignup disciplines={ [] }/>);
-  });
-
-  it('displays current sign ups', () => {
-    const disciplines = [
-      { id: 'foosball', name: 'Foosball' },
-      { id: 'darts', name: 'Darts' },
-      { id: 'pull-ups', name: 'Pull ups' },
-      { id: 'tekken', name: 'Tekken' }
-    ];
-    const signUps = { user: ['darts', 'tekken'] };
-    const wrapper = shallow(
-      <DisciplineSignup disciplines={ disciplines } fetchSignUps={ jest.fn() } signUps={ signUps }/>
-    );
-
-    const signUpComponents = wrapper.find(SignUps).dive().find(SignUp);
-    expect(signUpComponents.length).toBe(signUps.user.length);
   });
 
   it('chooses correct discipline', () => {
