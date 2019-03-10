@@ -5,7 +5,8 @@ const initialState = {
         { id: 'pull-ups', name: 'Pull ups' },
         { id: 'tekken', name: 'Tekken' }
     ],
-    signUps: {}
+    signUps: {},
+    submitted: false
 };
 
 export default (state = initialState, action) => {
@@ -19,7 +20,8 @@ export default (state = initialState, action) => {
             const newSignUps = { ...state.signUps, ...action.payload };
             return {
                 ...state,
-                signUps: newSignUps
+                signUps: newSignUps,
+                submitted: true
             };
         default:
             return state

@@ -9,9 +9,6 @@ const StyledDiscliplineTiles = styled.section`
 `;
 
 const DisciplineTiles = (props) => {
-  if (!props.show) {
-    return null;
-  }
   return (
     <StyledDiscliplineTiles>
       { props.disciplines.map(it => (

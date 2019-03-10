@@ -1,0 +1,22 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import SignUps from '../../components/SignUps/SignUps';
+import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
+
+export class ListSignUps extends Component {
+  render() {
+    return (
+      <>
+        <SuccessDialog/>
+        <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
+      </>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  disciplines: state.disciplines,
+  signUps: state.signUps
+});
+
+export default connect(mapStateToProps)(ListSignUps);

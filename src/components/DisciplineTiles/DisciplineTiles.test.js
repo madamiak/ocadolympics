@@ -8,21 +8,7 @@ describe('<DisciplineTiles/>', () => {
     render(<DisciplineTiles disciplines={ [] }/>);
   });
 
-  it('displays nothing when show is false', () => {
-    const disciplines = [
-      { id: 'foosball', name: 'Foosball' },
-      { id: 'darts', name: 'Darts' },
-      { id: 'pull-ups', name: 'Pull ups' },
-      { id: 'tekken', name: 'Tekken' }
-    ];
-
-    const wrapper = shallow(<DisciplineTiles show={false} disciplines={ disciplines }/>);
-
-    const disciplineComponents = wrapper.find(DisciplineTile);
-    expect(disciplineComponents.exists()).toBeFalsy();
-  });
-
-  it('displays disciplines when show is true', () => {
+  it('displays disciplines', () => {
     const disciplines = [
       { id: 'foosball', name: 'Foosball' },
       { id: 'darts', name: 'Darts' },

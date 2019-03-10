@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import DisciplineSignup from './DisciplineSignup/DisciplineSignup';
+import ListSignUps from './ListSignUps/ListSignUps';
+import { connect } from 'react-redux';
 
-class App extends Component {
+export class App extends Component {
 
-    render() {
-        return <DisciplineSignup/>;
+  render() {
+    if (!this.props.submitted) {
+      return <DisciplineSignup/>;
+    } else {
+      return <ListSignUps/>;
     }
+  }
 
 }
 
-export default App;
+const mapStateToProps = state => ({
+  submitted: state.submitted
+});
+
+export default connect(mapStateToProps)(App);

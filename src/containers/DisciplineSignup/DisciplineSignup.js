@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchSignUps, signUpForDisciplines } from '../../store/actions/actions';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
-import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
-import SignUps from '../../components/SignUps/SignUps';
 import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
 import Button from '../../components/Button/Button';
 
@@ -14,7 +12,6 @@ export class DisciplineSignup extends Component {
     super(props);
     this.state = {
       showConfirmation: false,
-      submitted: false,
       disciplines: props.disciplines
     }
   }
@@ -27,14 +24,11 @@ export class DisciplineSignup extends Component {
     return (
       <>
         <DisciplineTiles
-          show={ !this.state.submitted }
           disciplines={ this.state.disciplines }
           selectionChange={ this.selectionChange }
         />
-        <Button hidden={ this.state.submitted } onClick={ this.selectionSubmit }>Sign up</Button>
-        <SuccessDialog show={ this.state.submitted }/>
+        <Button onClick={ this.selectionSubmit }>Sign up</Button>
         <ConfirmationDialog show={ this.state.showConfirmation } acceptHandler={ this.selectionAccept }/>
-        <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
       </>
     );
   }
@@ -52,10 +46,7 @@ export class DisciplineSignup extends Component {
 
   selectionAccept = () => {
     this.disciplinesSignUp();
-    this.setState({
-      showConfirmation: false,
-      submitted: true
-    });
+    this.setState({ showConfirmation: false });
   };
 
   disciplinesSignUp = () => {
@@ -74,7 +65,8 @@ const mapStateToProps = state => ({
     name: it.name,
     checked: false
   })),
-  signUps: state.signUps
+  signUps: state.signUps,
+  submitted: state.submitted
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

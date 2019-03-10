@@ -23,7 +23,8 @@ describe('<DisciplineSignup/>', () => {
       disciplines: disciplines,
       signUps: {
         user: signUps
-      }
+      },
+      submitted: false
     });
 
     const wrapper = mount(
@@ -36,6 +37,7 @@ describe('<DisciplineSignup/>', () => {
     expect(props.disciplines.length).toEqual(disciplines.length);
     expect(props.signUps).toBeTruthy();
     expect(props.signUps.user.length).toEqual(signUps.length);
+    expect(props.submitted).toBeFalsy();
     expect(props.signUpForDisciplines).toBeTruthy();
     expect(props.fetchSignUps).toBeTruthy();
   });
@@ -48,7 +50,7 @@ describe('<DisciplineSignup/>', () => {
     expect(wrapper.state().disciplines[1].checked).toBeTruthy();
   });
 
-  it('shows confirmation dialog when signing up for selected getDisciplines', () => {
+  it('shows confirmation dialog when signing up for selected disciplines', () => {
     const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
     expect(wrapper.state().showConfirmation).toBeFalsy();
 
@@ -57,7 +59,7 @@ describe('<DisciplineSignup/>', () => {
     expect(wrapper.state().showConfirmation).toBeTruthy();
   });
 
-  it('fires sign up for getDisciplines when signing up for selected getDisciplines', () => {
+  it('fires sign up for getDisciplines when signing up for selected disciplines', () => {
     const func = jest.fn();
     const wrapper = shallow(
       <DisciplineSignup disciplines={ getDisciplines() } signUpForDisciplines={ func } fetchSignUps={ jest.fn() }/>
@@ -71,14 +73,12 @@ describe('<DisciplineSignup/>', () => {
     expect(func.mock.calls[0][0]).toEqual(['darts', 'tekken']);
   });
 
-  it('sets sign ups submitted', () => {
+  it('hides confirmation dialog after signing up for selected disciplines', () => {
     const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
-    expect(wrapper.state().submitted).toBeFalsy();
 
     wrapper.instance().selectionAccept();
 
     expect(wrapper.state().showConfirmation).toBeFalsy();
-    expect(wrapper.state().submitted).toBeTruthy();
   });
 
 });

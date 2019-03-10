@@ -9,7 +9,8 @@ describe('reducer', () => {
                 { id: 'pull-ups', name: 'Pull ups' },
                 { id: 'tekken', name: 'Tekken' }
             ],
-            signUps: {}
+            signUps: {},
+            submitted: false
         })
     });
 
@@ -30,7 +31,8 @@ describe('reducer', () => {
             disciplines: [],
             signUps: {
                 user1: ['signUp1']
-            }
+            },
+            submitted: false
         };
         const signUps = { user2: ['signUp1', 'signUp2'] };
         expect(reducer(initialState, { type: 'USER_SIGNED_UP', payload: signUps })).toEqual({
@@ -38,7 +40,8 @@ describe('reducer', () => {
             signUps: {
                 user1: ['signUp1'],
                 user2: ['signUp1', 'signUp2']
-            }
+            },
+            submitted: true
         })
     });
 });
