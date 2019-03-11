@@ -6,15 +6,17 @@ const StyledDiscipline = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 10rem;
+    height: 100%;
+    min-height: 2rem;
+    cursor: pointer;
     
     ${ props => props.checked && css`
-        background: #777;
+        background: #AAA;
         color: white;
     ` }
 `;
 
-const DisciplineTile = (props) => {
+const DisciplineTile = props => {
   return (
     <StyledDiscipline id={ props.id } checked={ props.checked } onClick={ props.selectionChange }>
       { props.name }

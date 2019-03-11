@@ -1,8 +1,12 @@
 import React from 'react';
-import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
 
-const ConfirmationDialog = (props) => {
-  return <Button className='accept' onClick={ props.acceptHandler } hidden={ !props.show }>Confirm</Button>;
+const ConfirmationDialog = props => {
+  return (
+    <Modal show={ props.show } acceptHandler={ props.acceptHandler } cancelHandler={ props.cancelHandler }>
+      Do you want to sign up for selected disciplines?
+    </Modal>
+  );
 };
 
 export default ConfirmationDialog;

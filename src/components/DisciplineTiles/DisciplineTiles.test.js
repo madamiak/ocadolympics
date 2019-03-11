@@ -16,7 +16,7 @@ describe('<DisciplineTiles/>', () => {
       { id: 'tekken', name: 'Tekken' }
     ];
 
-    const wrapper = shallow(<DisciplineTiles show={true} disciplines={ disciplines }/>);
+    const wrapper = shallow(<DisciplineTiles show={ true } disciplines={ disciplines }/>);
 
     const disciplineComponents = wrapper.find(DisciplineTile);
     expect(disciplineComponents.length).toBe(disciplines.length);

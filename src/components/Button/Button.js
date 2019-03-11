@@ -1,11 +1,18 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledButton = styled.button`
-  width: 100%;
+  margin: 1rem;
+  
+  ${ props => props.cta ?
+    css`
+      background-color: #AAA;
+      color: #333;
+    ` : null 
+  };
 `;
 
-const Button = (props) => {
+const Button = props => {
   return (
     <StyledButton { ...props }>{ props.children }</StyledButton>
   )

@@ -5,14 +5,23 @@
     >  768px - tablets
     >= 960px - desktops
 */
-body {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
     font-family: "Roboto", "Helvetica", sans-serif;
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+    height: 100%;
 }
 
 button {
@@ -30,4 +39,8 @@ button:active,
 button:hover {
     background-color: #777;
     color: white;
+}
+
+hr {
+    color: #777777;
 }

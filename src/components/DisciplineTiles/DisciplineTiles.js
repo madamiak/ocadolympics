@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import DisciplineTile from '../DisciplineTile/DisciplineTile';
 
-const StyledDiscliplineTiles = styled.section`
+const StyledDisciplineTiles = styled.section`
     display: flex;
-    flex-direction: row;
-    flex-flow: wrap;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
 `;
 
-const DisciplineTiles = (props) => {
+const DisciplineTiles = props => {
   return (
-    <StyledDiscliplineTiles>
+    <StyledDisciplineTiles>
       { props.disciplines.map(it => (
         <DisciplineTile
           key={ it.id }
@@ -20,7 +21,7 @@ const DisciplineTiles = (props) => {
           selectionChange={ props.selectionChange }
         />))
       }
-    </StyledDiscliplineTiles>
+    </StyledDisciplineTiles>
   );
 };
 

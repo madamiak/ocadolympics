@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { fetchSignUps, signUpForDisciplines } from '../../store/actions/actions';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
-import Button from '../../components/Button/Button';
+import DisciplineSignupActions from '../../components/DisciplineSignupActions/DisciplineSignupActions';
+import DisciplineSignupLayout from '../../components/DisciplineSignupLayout/DisciplineSignupLayout';
 
 export class DisciplineSignup extends Component {
 
@@ -22,14 +23,18 @@ export class DisciplineSignup extends Component {
 
   render() {
     return (
-      <>
+      <DisciplineSignupLayout>
         <DisciplineTiles
           disciplines={ this.state.disciplines }
           selectionChange={ this.selectionChange }
         />
-        <Button onClick={ this.selectionSubmit }>Sign up</Button>
-        <ConfirmationDialog show={ this.state.showConfirmation } acceptHandler={ this.selectionAccept }/>
-      </>
+        <DisciplineSignupActions acceptHandler={ this.selectionSubmit }/>
+        <ConfirmationDialog
+          show={ this.state.showConfirmation }
+          acceptHandler={ this.selectionAccept }
+          cancelHandler={ this.selectionRefuse }
+        />
+      </DisciplineSignupLayout>
     );
   }
 
@@ -46,6 +51,10 @@ export class DisciplineSignup extends Component {
 
   selectionAccept = () => {
     this.disciplinesSignUp();
+    this.setState({ showConfirmation: false });
+  };
+
+  selectionRefuse = () => {
     this.setState({ showConfirmation: false });
   };
 
