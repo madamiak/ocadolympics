@@ -81,6 +81,16 @@ describe('<DisciplineSignup/>', () => {
     expect(wrapper.state().showConfirmation).toBeFalsy();
   });
 
+  it('discards selected disciplines', () => {
+    const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
+
+    wrapper.instance().selectionSubmit();
+    expect(wrapper.state().showConfirmation).toBeTruthy();
+
+    wrapper.instance().selectionRefuse();
+    expect(wrapper.state().showConfirmation).toBeFalsy();
+  });
+
 });
 
 
