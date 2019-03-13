@@ -28,9 +28,14 @@ export class DisciplineSignup extends Component {
           disciplines={ this.state.disciplines }
           selectionChange={ this.selectionChange }
         />
-        <DisciplineSignupActions acceptHandler={ this.selectionSubmit }/>
+        <DisciplineSignupActions
+          disabled={ (this.selectedDisciplines().length === 0) }
+          acceptHandler={ this.selectionSubmit }
+        />
         <ConfirmationDialog
           show={ this.state.showConfirmation }
+          signUps={ this.currentUserSignUps() }
+          disciplines={ this.state.disciplines }
           acceptHandler={ this.selectionAccept }
           cancelHandler={ this.selectionRefuse }
         />
@@ -60,12 +65,20 @@ export class DisciplineSignup extends Component {
 
   disciplinesSignUp = () => {
     if (this.props.signUpForDisciplines) {
-      const selectedDisciplines = this.state.disciplines
-        .filter(it => it.checked)
-        .map(it => it.id);
-      this.props.signUpForDisciplines(selectedDisciplines);
+      this.props.signUpForDisciplines(this.selectedDisciplines());
     }
   };
+
+  currentUserSignUps = () => {
+    const selectedDisciplines = this.selectedDisciplines()
+    return { user: selectedDisciplines };
+  }
+
+  selectedDisciplines() {
+    return this.state.disciplines
+      .filter(it => it.checked)
+      .map(it => it.id)
+  }
 }
 
 const mapStateToProps = state => ({

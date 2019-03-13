@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 const StyledDiscipline = styled.div`
     display: flex;
@@ -9,6 +9,10 @@ const StyledDiscipline = styled.div`
     height: 100%;
     min-height: 2rem;
     cursor: pointer;
+    
+    &:hover {
+      font-weight: 700;
+    }
     
     ${ props => props.checked && css`
         background: #AAA;

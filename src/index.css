@@ -41,6 +41,12 @@ button:hover {
     color: white;
 }
 
+button:disabled {
+    background-color: white;
+    color: #AAA;
+    cursor: not-allowed;
+}
+
 hr {
     color: #777777;
 }
