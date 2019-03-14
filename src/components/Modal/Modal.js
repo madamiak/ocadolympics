@@ -13,7 +13,7 @@ const StyledModal = styled.section`
   box-shadow: 1px 1px 1px black;
   padding: 1rem;
   left: 15%;
-  top: 30%;
+  top: 20%;
   
   ${ props => props.show ?
   css`
@@ -51,7 +51,7 @@ const Modal = props => {
     <>
       <Backdrop show={ props.show } clickHandler={ props.cancelHandler }/>
       <StyledModal show={ props.show }>
-        <ModalHeader>Some header</ModalHeader>
+        <ModalHeader>{ props.headerText }</ModalHeader>
         <ModalContent>{ props.children }</ModalContent>
         <ModalFooter acceptHandler={ props.acceptHandler } cancelHandler={ props.cancelHandler }/>
       </StyledModal>

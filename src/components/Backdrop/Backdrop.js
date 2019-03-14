@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledBackdrop = styled.div`
+const StyledBackdrop = styled.section`
   width: 100%;
   height: 100%;
   position: fixed;
