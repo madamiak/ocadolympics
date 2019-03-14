@@ -3,6 +3,7 @@ import { default as reducer } from './reducer';
 describe('reducer', () => {
   it('sets initial state', () => {
     expect(reducer(undefined, {})).toEqual({
+      login: 'user2',
       disciplines: [
         { id: 'foosball', name: 'Foosball' },
         { id: 'darts', name: 'Darts' },

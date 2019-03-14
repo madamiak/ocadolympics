@@ -3,14 +3,11 @@ export const getSignUps = () => {
     .then(it => it.json())
 };
 
-export const addSignUp = (user, userSignUps) => {
-  const payload = {
-    [user]: userSignUps
-  };
-  return fetch('https://ocadolympics.firebaseio.com/signUps.json',
+export const addSignUp = userWithDisciplines => {
+  return fetch('https://ocadolympics.firebaseio.com/signUps/.json',
     {
-      method: 'PUT',
-      body: JSON.stringify(payload)
+      method: 'PATCH',
+      body: JSON.stringify(userWithDisciplines)
     })
     .then(it => it.json());
 };

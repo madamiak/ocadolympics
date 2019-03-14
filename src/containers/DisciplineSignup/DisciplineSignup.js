@@ -34,7 +34,7 @@ export class DisciplineSignup extends Component {
         />
         <ConfirmationDialog
           show={ this.state.showConfirmation }
-          signUps={ this.currentUserSignUps() }
+          signUps={ this.userWithDisciplines() }
           disciplines={ this.state.disciplines }
           acceptHandler={ this.selectionAccept }
           cancelHandler={ this.selectionRefuse }
@@ -65,14 +65,15 @@ export class DisciplineSignup extends Component {
 
   disciplinesSignUp = () => {
     if (this.props.signUpForDisciplines) {
-      this.props.signUpForDisciplines(this.selectedDisciplines());
+      this.props.signUpForDisciplines(this.userWithDisciplines());
     }
   };
 
-  currentUserSignUps = () => {
-    const selectedDisciplines = this.selectedDisciplines()
-    return { user: selectedDisciplines };
-  }
+  userWithDisciplines = () => {
+    return {
+      [this.props.login]: this.selectedDisciplines()
+    };
+  };
 
   selectedDisciplines() {
     return this.state.disciplines
@@ -82,6 +83,7 @@ export class DisciplineSignup extends Component {
 }
 
 const mapStateToProps = state => ({
+  login: state.login,
   disciplines: state.disciplines.map(it => ({
     id: it.id,
     name: it.name,

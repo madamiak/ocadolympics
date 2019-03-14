@@ -1,4 +1,5 @@
 const initialState = {
+  login: 'user2',
   disciplines: [
     { id: 'foosball', name: 'Foosball' },
     { id: 'darts', name: 'Darts' },
