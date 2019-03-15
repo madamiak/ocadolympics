@@ -7,7 +7,8 @@ const initialState = {
     { id: 'tekken', name: 'Tekken' }
   ],
   signUps: {},
-  submitted: false
+  submitted: false,
+  toasts: []
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +24,16 @@ export default (state = initialState, action) => {
         ...state,
         signUps: newSignUps,
         submitted: true
+      };
+    case 'ADD_TOAST':
+      return {
+        ...state,
+        toasts: [action.payload, ...state.toasts]
+      };
+    case 'REMOVE_TOAST':
+      return {
+        ...state,
+        toasts: state.toasts.filter(toast => toast.id !== action.payload)
       };
     default:
       return state

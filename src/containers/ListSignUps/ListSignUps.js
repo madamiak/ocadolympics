@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SignUps from '../../components/SignUps/SignUps';
-import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
+import Toasts from '../../components/Toasts/Toasts';
 
 export class ListSignUps extends Component {
   render() {
     return (
       <>
-        <SuccessDialog/>
+        <Toasts/>
         <SignUps signUps={ this.props.signUps } disciplines={ this.props.disciplines }/>
       </>
     );
