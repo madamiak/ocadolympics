@@ -22,7 +22,8 @@ describe('<App/>', () => {
       signUps: {
         user: ['darts', 'tekken']
       },
-      submitted: true
+      submitted: true,
+      toasts: []
     });
 
     const wrapper = mount(

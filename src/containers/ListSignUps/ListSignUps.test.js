@@ -1,13 +1,13 @@
 import React from 'react';
-import { mount, render, shallow } from 'enzyme';
-import { default as ConnectedListSignUps, ListSignUps } from './ListSignUps';
+import { mount, shallow } from 'enzyme';
+import ConnectedListSignUps, { ListSignUps } from './ListSignUps';
 import SignUps from '../../components/SignUps/SignUps';
 import { mockStore } from '../../utils/test/testUtils';
 import { Provider } from 'react-redux';
 
 describe('<ListSignUps/>', () => {
   it('renders without crashing', () => {
-    render(<ListSignUps/>)
+    shallow(<ListSignUps/>);
   });
 
   it('connects to redux', () => {
@@ -20,7 +20,8 @@ describe('<ListSignUps/>', () => {
       ],
       signUps: {
         user: ['darts', 'tekken']
-      }
+      },
+      toasts: []
     });
 
     const wrapper = mount(

@@ -11,7 +11,8 @@ describe('reducer', () => {
         { id: 'tekken', name: 'Tekken' }
       ],
       signUps: {},
-      submitted: false
+      submitted: false,
+      toasts: []
     })
   });
 
@@ -27,7 +28,7 @@ describe('reducer', () => {
     })
   });
 
-  it('sets user\'s sign ups', () => {
+  it(`sets user's sign ups`, () => {
     const initialState = {
       disciplines: [],
       signUps: {
@@ -44,5 +45,29 @@ describe('reducer', () => {
       },
       submitted: true
     })
+  });
+
+  it('adds toast', () => {
+    const initialState = {
+      toasts: [{ id: '1', content: 'some toast' }]
+    };
+    expect(reducer(initialState, { type: 'ADD_TOAST', payload: { id: '2', content: 'new toast' } })).toEqual({
+      toasts: [
+        { id: '2', content: 'new toast' },
+        { id: '1', content: 'some toast' }
+      ]
+    });
+  });
+
+  it('removes toast', () => {
+    const initialState = {
+      toasts: [
+        { id: '1', content: 'some toast' },
+        { id: '2', content: 'another toast' }
+      ]
+    };
+    expect(reducer(initialState, { type: 'REMOVE_TOAST', payload: '2' })).toEqual({
+      toasts: [{ id: '1', content: 'some toast' }]
+    });
   });
 });

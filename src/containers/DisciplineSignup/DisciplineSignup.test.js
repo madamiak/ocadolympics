@@ -60,14 +60,16 @@ describe('<DisciplineSignup/>', () => {
   });
 
   it('fires sign up for getDisciplines when signing up for selected disciplines', () => {
-    const func = jest.fn();
+    const signUp = jest.fn();
     const login = 'user';
+    const addToast = jest.fn();
     const wrapper = shallow(
       <DisciplineSignup
         login={ login }
         disciplines={ getDisciplines() }
-        signUpForDisciplines={ func }
+        signUpForDisciplines={ signUp }
         fetchSignUps={ jest.fn() }
+        addToast={ addToast }
       />
     );
 
@@ -75,12 +77,19 @@ describe('<DisciplineSignup/>', () => {
     wrapper.instance().selectionChange({ target: { id: 'tekken' } });
     wrapper.instance().selectionAccept();
 
-    expect(func).toHaveBeenCalled();
-    expect(func.mock.calls[0][0]).toEqual({ [login]: ['darts', 'tekken'] });
+    expect(signUp).toHaveBeenCalled();
+    expect(signUp.mock.calls[0][0]).toEqual({ [login]: ['darts', 'tekken'] });
+    expect(addToast).toHaveBeenCalled();
   });
 
   it('hides confirmation dialog after signing up for selected disciplines', () => {
-    const wrapper = shallow(<DisciplineSignup disciplines={ getDisciplines() } fetchSignUps={ jest.fn() }/>);
+    const wrapper = shallow(
+      <DisciplineSignup
+        disciplines={ getDisciplines() }
+        fetchSignUps={ jest.fn() }
+        addToast={ jest.fn() }
+      />
+    );
 
     wrapper.instance().selectionAccept();
 

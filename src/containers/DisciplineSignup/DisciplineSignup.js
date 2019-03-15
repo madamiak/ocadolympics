@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSignUps, signUpForDisciplines } from '../../store/actions/actions';
+import { addToast, fetchSignUps, signUpForDisciplines } from '../../store/actions/actions';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
 import DisciplineSignupActions from '../../components/DisciplineSignupActions/DisciplineSignupActions';
 import DisciplineSignupLayout from '../../components/DisciplineSignupLayout/DisciplineSignupLayout';
+import SuccessDialog from '../../components/SuccessDialog/SuccessDialog';
 
 export class DisciplineSignup extends Component {
 
@@ -57,6 +58,7 @@ export class DisciplineSignup extends Component {
   selectionAccept = () => {
     this.disciplinesSignUp();
     this.setState({ showConfirmation: false });
+    this.props.addToast(<SuccessDialog/>);
   };
 
   selectionRefuse = () => {
@@ -94,6 +96,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addToast,
   fetchSignUps,
   signUpForDisciplines
 }, dispatch);
