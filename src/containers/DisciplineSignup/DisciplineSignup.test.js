@@ -3,6 +3,7 @@ import { mount, render, shallow } from 'enzyme';
 import { default as ConnectedDisciplineSignup, DisciplineSignup } from './DisciplineSignup';
 import { mockStore } from '../../utils/test/testUtils';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router'
 
 describe('<DisciplineSignup/>', () => {
   const getDisciplines = () => [
@@ -20,16 +21,20 @@ describe('<DisciplineSignup/>', () => {
     const disciplines = getDisciplines();
     const signUps = ['darts', 'tekken'];
     const store = mockStore({
-      disciplines: disciplines,
       signUps: {
-        user: signUps
-      },
-      submitted: false
+        disciplines: disciplines,
+        signUps: {
+          user: signUps
+        },
+        submitted: false
+      }
     });
 
     const wrapper = mount(
       <Provider store={ store }>
-        <ConnectedDisciplineSignup/>
+        <MemoryRouter>
+          <ConnectedDisciplineSignup/>
+        </MemoryRouter>
       </Provider>
     );
 
@@ -69,6 +74,7 @@ describe('<DisciplineSignup/>', () => {
         disciplines={ getDisciplines() }
         signUpForDisciplines={ signUp }
         fetchSignUps={ jest.fn() }
+        history={ { push: jest.fn() } }
         addToast={ addToast }
       />
     );
@@ -88,6 +94,7 @@ describe('<DisciplineSignup/>', () => {
         disciplines={ getDisciplines() }
         fetchSignUps={ jest.fn() }
         addToast={ jest.fn() }
+        history={ { push: jest.fn() } }
       />
     );
 

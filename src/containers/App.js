@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router';
 import DisciplineSignup from './DisciplineSignup/DisciplineSignup';
 import ListSignUps from './ListSignUps/ListSignUps';
-import { connect } from 'react-redux';
 
 export class App extends Component {
 
   render() {
-    if (!this.props.submitted) {
-      return <DisciplineSignup/>;
-    } else {
-      return <ListSignUps/>;
-    }
+    return (
+      <Switch>
+        <Route path='/signup' component={ DisciplineSignup }/>
+        <Route path='/signups' component={ ListSignUps }/>
+        <Redirect from='/' to={ '/signup' }/>
+      </Switch>
+    );
   }
 
 }
 
-const mapStateToProps = state => ({
-  submitted: state.submitted
-});
-
-export default connect(mapStateToProps)(App);
+export default connect()(App);

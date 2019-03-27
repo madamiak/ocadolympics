@@ -12,14 +12,16 @@ describe('<ListSignUps/>', () => {
 
   it('connects to redux', () => {
     const store = mockStore({
-      disciplines: [
-        { id: 'foosball', name: 'Foosball' },
-        { id: 'darts', name: 'Darts' },
-        { id: 'pull-ups', name: 'Pull ups' },
-        { id: 'tekken', name: 'Tekken' }
-      ],
       signUps: {
-        user: ['darts', 'tekken']
+        disciplines: [
+          { id: 'foosball', name: 'Foosball' },
+          { id: 'darts', name: 'Darts' },
+          { id: 'pull-ups', name: 'Pull ups' },
+          { id: 'tekken', name: 'Tekken' }
+        ],
+        signUps: {
+          user: ['darts', 'tekken']
+        }
       },
       toasts: []
     });

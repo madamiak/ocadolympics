@@ -1,4 +1,4 @@
-import { default as reducer } from './reducer';
+import reducer from './reducer';
 
 describe('reducer', () => {
   it('sets initial state', () => {

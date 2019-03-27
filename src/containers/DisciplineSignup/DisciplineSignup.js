@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
+import { withRouter } from 'react-router';
 import { addToast, fetchSignUps, signUpForDisciplines } from '../../store/actions/actions';
 import ConfirmationDialog from '../../components/ConfirmationDialog/ConfirmationDialog';
 import DisciplineTiles from '../../components/DisciplineTiles/DisciplineTiles';
@@ -59,6 +60,7 @@ export class DisciplineSignup extends Component {
     this.disciplinesSignUp();
     this.setState({ showConfirmation: false });
     this.props.addToast(<SuccessDialog/>);
+    this.props.history.push('/signups');
   };
 
   selectionRefuse = () => {
@@ -85,14 +87,14 @@ export class DisciplineSignup extends Component {
 }
 
 const mapStateToProps = state => ({
-  login: state.login,
-  disciplines: state.disciplines.map(it => ({
+  login: state.signUps.login,
+  disciplines: state.signUps.disciplines.map(it => ({
     id: it.id,
     name: it.name,
     checked: false
   })),
-  signUps: state.signUps,
-  submitted: state.submitted
+  signUps: state.signUps.signUps,
+  submitted: state.signUps.submitted
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -101,4 +103,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   signUpForDisciplines
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisciplineSignup);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(DisciplineSignup);

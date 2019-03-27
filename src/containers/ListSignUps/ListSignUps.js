@@ -15,8 +15,8 @@ export class ListSignUps extends Component {
 }
 
 const mapStateToProps = state => ({
-  disciplines: state.disciplines,
-  signUps: state.signUps
+  disciplines: state.signUps.disciplines,
+  signUps: state.signUps.signUps
 });
 
 export default connect(mapStateToProps)(ListSignUps);
